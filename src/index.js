@@ -4,6 +4,13 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import store from './redux/store'
+import { setUser } from './redux/reducers/user'
+
+const userJson = localStorage.getItem('user')
+const userObj = JSON.parse(userJson)
+store.dispatch(setUser(userObj))
+
 ReactDOM.render(
   <React.StrictMode>
     <App />
