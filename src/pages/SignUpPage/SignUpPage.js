@@ -75,17 +75,9 @@ const SignUpPage = () => {
 
 
 
-  var data = {
-    // id:21,
-  }
+
   const submitForm = async () => {
     const payload = await form.getFieldValue()
-    // if(payload. > 0){
-    //   alert('Bạn đã đăng kí thành công tài khoản')
-    // }
-    // else {
-    //   alert('Lỗi đăng kí. Vui lòng thử lại')
-    // }
     console.log('payload Sign Up', payload)
 
   }
