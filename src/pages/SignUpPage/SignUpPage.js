@@ -59,7 +59,14 @@ const SignUpPage = () => {
         setUser(response.data)
         console.log('test post', response.data)
       })
-    history.push('/signin')
+    if(newData){
+      alert('Bạn đã đăng kí thành công tài khoản')
+      history.push('/signin')
+    }
+    else{
+      alert('Lỗi đăng kí. Vui lòng thử lại')
+    }
+    
   }
 
   const onFinishFailed = (errors) => {
@@ -73,7 +80,12 @@ const SignUpPage = () => {
   }
   const submitForm = async () => {
     const payload = await form.getFieldValue()
-    alert('Bạn đã đăng kí thành công tài khoản')
+    // if(payload. > 0){
+    //   alert('Bạn đã đăng kí thành công tài khoản')
+    // }
+    // else {
+    //   alert('Lỗi đăng kí. Vui lòng thử lại')
+    // }
     console.log('payload Sign Up', payload)
 
   }
