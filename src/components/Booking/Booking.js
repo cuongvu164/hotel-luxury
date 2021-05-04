@@ -50,6 +50,8 @@ const Booking = () => {
   const onFinish = async (values) => {
     const newData = { ...values }
     console.log('newdata',newData)
+    const type=newData.roomtype
+    // console.log(newData.roomtype)
     await axios.post(`http://localhost:5000/order/add?id=${count}&email=${values.email}&note=${values.note}&dayin=${values.date[0]._d.getMonth()}/${values.date[0]._d.getDay()}/${values.date[0]._d.getFullYear()}&dayout=${values.date[1]._d.getMonth()}/${values.date[1]._d.getUTCDay()}/${values.date[1]._d.getFullYear()}`)
       .then(response => {
         console.log('test post', response.data)
@@ -58,6 +60,10 @@ const Booking = () => {
         } else {
           alert('Chưa đặt được phòng')
         }
+      })
+      await axios.post(`http://localhost:5000/order/detail/add?id=${count}&type=${type}`)
+      .then(response => {
+        console.log('test post', response.data)
       })
     history.push('/')
   }
