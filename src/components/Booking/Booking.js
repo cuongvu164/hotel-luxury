@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux'
 import axios from 'axios';
 import uuid from 'uuid';
 import { DatePicker, Space } from 'antd';
@@ -12,6 +13,7 @@ import moment from 'moment';
 import 'moment/locale/zh-cn';
 const Booking = () => {
   const [form] = Form.useForm()
+  const loggedInUser = useSelector(store => store.user.user)
 
   const styles = {
     textAlign: 'center'
@@ -44,28 +46,35 @@ const Booking = () => {
 
   const submitForm = async () => {
     const payload = await form.getFieldsValue()
-    console.log('payload', payload.date[0]._d.getDate())
+    // console.log('payload', payload.date[0]._d.getDate())
   }
 
   const onFinish = async (values) => {
     const newData = { ...values }
-    console.log('newdata',newData)
-    const type=newData.roomtype
-    // console.log(newData.roomtype)
-    await axios.post(`http://localhost:5000/order/add?id=${count}&email=${values.email}&note=${values.note}&dayin=${values.date[0]._d.getMonth()}/${values.date[0]._d.getDay()}/${values.date[0]._d.getFullYear()}&dayout=${values.date[1]._d.getMonth()}/${values.date[1]._d.getUTCDay()}/${values.date[1]._d.getFullYear()}`)
-      .then(response => {
-        console.log('test post', response.data)
-        if(response.data){
-          alert('Đã đặt được phòng')
-        } else {
-          alert('Chưa đặt được phòng')
-        }
-      })
+    console.log('newdata', newData)
+    const type = newData.roomtype
+    if (!loggedInUser.status) {
+      alert('Bạn phải đăng nhập trước')
+      history.push('/signin')
+    }
+    else {
+      // console.log(newData.roomtype)
+      await axios.post(`http://localhost:5000/order/add?id=${count}&email=${values.email}&note=${values.note}&dayin=${values.date[0]._d.getMonth()}/${values.date[0]._d.getDay()}/${values.date[0]._d.getFullYear()}&dayout=${values.date[1]._d.getMonth()}/${values.date[1]._d.getUTCDay()}/${values.date[1]._d.getFullYear()}`)
+        .then(response => {
+          console.log('test post', response.data)
+          if (response.data) {
+            alert('Đã đặt được phòng')
+          } else {
+            alert('Chưa đặt được phòng')
+          }
+        })
       await axios.post(`http://localhost:5000/order/detail/add?id=${count}&type=${type}`)
-      .then(response => {
-        console.log('test post', response.data)
-      })
-    history.push('/')
+        .then(response => {
+          console.log('test post', response.data)
+        })
+      history.push('/')
+    }
+
   }
 
   useEffect(() => {
@@ -82,8 +91,8 @@ const Booking = () => {
               <h2 class="mb-5">Reservation Form</h2>
               <Form form={form} name="control-hooks" onFinish={onFinish} onSubmit={submitForm} style={styles}>
 
-                <Form.Item label="Ngày nhận và trả" name ="date" style={styleLayout}>
-                  <RangePicker format={dateFormat} defaultValue={moment('01-01-2021','DD-MM-YYYY')}/>
+                <Form.Item label="Ngày nhận và trả" name="date" style={styleLayout}>
+                  <RangePicker format={dateFormat} defaultValue={moment('01-01-2021', 'DD-MM-YYYY')} />
                 </Form.Item>
 
                 <Form.Item
@@ -97,7 +106,7 @@ const Booking = () => {
                   <Select>
                     {
                       roomTypes.map((roomType, index) => {
-                        return <Select.Option 
+                        return <Select.Option
                           value={roomType.LoaiPhong}>
                           {roomType.LoaiPhong}
                         </Select.Option>
@@ -106,20 +115,21 @@ const Booking = () => {
                   </Select>
                 </Form.Item>
 
-                <Form.Item 
+                <Form.Item
                   name="email"
                   label="Email"
+                  
                   rules={[
-                    { required: true, message: 'Please input your Email!' },
+                    { required: true, message: 'Vui lòng nhập Email!' },
                     // { validator: validateEmail },
                     // { message: 'Phải nhập đúng định dạng Email' }
                   ]}
                   style={styleLayout}
                 >
-                  <Input/>
+                  <Input defaultValue={loggedInUser.email}/>
                 </Form.Item>
 
-                <Form.Item 
+                <Form.Item
                   name="note"
                   label="Ghi Chú"
                   style={styleLayout}
@@ -129,7 +139,7 @@ const Booking = () => {
 
 
 
-                <Button type="primary" onClick={submitForm}  htmlType="submit">Submit</Button>
+                <Button type="primary" onClick={submitForm} htmlType="submit">Submit</Button>
               </Form>
 
             </div>

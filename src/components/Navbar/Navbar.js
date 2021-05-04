@@ -1,14 +1,18 @@
 import React from 'react';
 import {
   BrowserRouter as Router,
-  Link
+  Link,
+  useHistory
 } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux'
 import { setUser as setUserStore } from '../../redux/reducers/user'
 
 const Navbar = () => {
+  let history = useHistory()
+
   const loggedInUser = useSelector(store => store.user.user)
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
+  
   const logoutUser = () => {
     
     // localStorage.setItem('user',false);
@@ -19,6 +23,16 @@ const Navbar = () => {
       status: false
     }))
 
+  }
+
+  const checkStatus = () => {
+    // if (!loggedInUser.status){
+    //   console.log('Bạn phải đăng nhập trước',loggedInUser.status)
+    //   history.push('/signin')
+    // } else {
+    //   console.log('Bạn da đăng nhập trước',loggedInUser.status)
+    //   history.push('/booknow')
+    // }
   }
   return (
     <>
@@ -49,7 +63,7 @@ const Navbar = () => {
                 </li>
 
                 <li className="nav-item cta">
-                  <Link to="/booknow" className="nav-link"><span>Book Now</span></Link>
+                  <Link to="/booknow" className="nav-link" onClick={() =>checkStatus()}><span>Book Now</span></Link>
                 </li>
 
                 <li className="nav-item">

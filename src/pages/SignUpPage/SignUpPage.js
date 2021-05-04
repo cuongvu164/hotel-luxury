@@ -62,8 +62,7 @@ const SignUpPage = () => {
     if(newData){
       alert('Bạn đã đăng kí thành công tài khoản')
       history.push('/signin')
-    }
-    else{
+    } else{
       alert('Lỗi đăng kí. Vui lòng thử lại')
     }
     

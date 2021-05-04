@@ -5,7 +5,12 @@ import {
   Link,
 } from "react-router-dom";
 import Header from '../../components/Header/Header'
-import bg from '../../Image/hotel/F.jpg'
+import bgA from '../../Image/hotel/A.jpg'
+import bgB from '../../Image/hotel/B.jpg'
+import bgC from '../../Image/hotel/C.jpg'
+import bgD from '../../Image/hotel/D.jpg'
+import bgE from '../../Image/hotel/E.jpg'
+import bgF from '../../Image/hotel/F.jpg'
 
 const RoomPage = () => {
   const [rooms, setRooms] = useState([])
@@ -26,7 +31,7 @@ const RoomPage = () => {
 
   return (
     <>
-    {/* <img src={bg}></img> */}
+    {/* <img src={bgF}/> */}
     <Header title="Our Rooms" style={{display:'none'}} styleSize={{height:'50vh',minHeight:'550px'}}/>
       <section class="site-section">
         <div class="container">
