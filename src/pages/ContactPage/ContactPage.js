@@ -1,8 +1,24 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import Background4 from '../../images/img_4.jpg'
 import Header from '../../components/Header/Header'
+import axios from 'axios'
 
 const ContactPage = () => {
+  const [name, setName] = useState('')
+  const [phone, setPhone] = useState('')
+  const [email, setEmail] = useState('')
+  const [message, setMessage] = useState('')
+  const [data, setData] = useState(true)
+
+  const submit = async () => {
+    await axios.post(`http://localhost:5000/dg/send?NoiDung=${message}&NguoiDG=${name}&Email=${email}&phonenum=${phone}`)
+      .then(response =>{
+        setData(response.data)
+        console.log('respondata',response.data)
+      })
+
+    console.log('data',name,phone, email, message)
+  }
   return (
     <>
     <Header title="Contact Us" style={{display:'none'}} styleSize={{height:'50vh',minHeight:'550px'}}/>
@@ -11,37 +27,37 @@ const ContactPage = () => {
         <div class="row">
           <div class="col-md-6">
             <h2 class="mb-5">Contact Form</h2>
-          <form action="#" method="POST">
+          {/* <form> */}
                   <div class="row">
                     <div class="col-md-12 form-group">
                       <label for="name">Name</label>
-                      <input type="text" id="name" class="form-control "/>
+                      <input type="text" name="name" id="name" class="form-control " value={name} onChange={(e)=>setName(e.target.value)}/>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-md-12 form-group">
                       <label for="phone">Phone</label>
-                      <input type="text" id="phone" class="form-control "/>
+                      <input type="text" name="phone" id="phone" class="form-control "value={phone} onChange={(e)=>setPhone(e.target.value)} />
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-md-12 form-group">
                       <label for="email">Email</label>
-                      <input type="email" id="email" class="form-control "/>
+                      <input type="email" name="email" id="email" class="form-control " value={email} onChange={(e)=>setEmail(e.target.value)}/>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-md-12 form-group">
                       <label for="message">Write Message</label>
-                      <textarea name="message" id="message" class="form-control " cols="30" rows="8"></textarea>
+                      <textarea name="message" id="message" class="form-control " cols="30" rows="8" value={message} onChange={(e)=>setMessage(e.target.value)}></textarea>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-md-6 form-group">
-                      <input type="submit" value="Send Message" class="btn btn-primary"/>
+                      <input type="submit" value="Send Message" class="btn btn-primary" onClick={() => submit()} />
                     </div>
                   </div>
-                </form>
+                {/* </form> */}
               </div>
               <div class="col-md-1"></div>
               <div class="col-md-5">
