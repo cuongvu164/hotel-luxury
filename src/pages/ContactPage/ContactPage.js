@@ -2,7 +2,8 @@ import React, {useState, useEffect} from 'react';
 import Background4 from '../../images/img_4.jpg'
 import Header from '../../components/Header/Header'
 import axios from 'axios'
-
+var d = new Date()
+var count = d.getMonth() + d.getSeconds() + d.getMilliseconds() + d.getFullYear()
 const ContactPage = () => {
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
@@ -11,13 +12,13 @@ const ContactPage = () => {
   const [data, setData] = useState(true)
 
   const submit = async () => {
-    await axios.post(`http://localhost:5000/dg/send?NoiDung=${message}&NguoiDG=${name}&Email=${email}&phonenum=${phone}`)
+    await axios.post(`http://localhost:5000/dg/send?MaDG=${count}&NoiDung=${message}&NguoiDG=${name}&Email=${email}&phonenum=${phone}`)
       .then(response =>{
         setData(response.data)
         console.log('respondata',response.data)
       })
 
-    console.log('data',name,phone, email, message)
+    console.log('data',count,name,phone, email, message)
   }
   return (
     <>

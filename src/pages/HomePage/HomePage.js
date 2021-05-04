@@ -10,6 +10,8 @@ import HOCContext from '../../components/MyHOC/HOCContext'
 
 
 const HomePage = () => {
+  // localStorage.setItem('user', JSON.stringify({id:null,name:null,email:null,status:false}))
+
   return (
     <>
       <Header title="Welcome To Our Luxury Rooms"/>

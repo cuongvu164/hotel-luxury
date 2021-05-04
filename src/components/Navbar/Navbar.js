@@ -56,11 +56,10 @@ const Navbar = () => {
                   <Link className="nav-link" to="/account/profile">{loggedInUser.name}</Link>
                 </li>
                 <li className="nav-item">
-                {/* <span className=""></span> */}
+                <span className=""></span>
                   {
                     loggedInUser.status ? <Link to="/" className="nav-link" onClick={()=>logoutUser()}>Logout</Link> : <Link className="nav-link" to="/signin">Sign In</Link>
                   }
-                   {/* <Link className="nav-link" to="/signin">Sign In</Link> */}
                 </li>
               </ul>
               
